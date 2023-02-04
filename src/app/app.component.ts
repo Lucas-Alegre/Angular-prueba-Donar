@@ -7,4 +7,5 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'AngularDonacion';
+  url ="https://mercado-pago-alkemi-zfll2.vercel.app/checkout";
 }
