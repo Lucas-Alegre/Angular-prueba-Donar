@@ -1,3 +1,4 @@
+import { state } from '@angular/animations';
 import { Component, OnInit } from '@angular/core';
 import { HammerModule } from '@angular/platform-browser';
 import { Store } from '@ngrx/store';
@@ -6,8 +7,7 @@ import { ItemModel } from '../core/models/item.interface';
 import { ItemsState } from '../core/models/items.state';
 import { loadedItems, loadItems } from '../state/actions/items.actions';
 import {
-  selectListItems,
-  selectListLoading,
+  AuthSelector,
 } from '../state/selectors/items.selectors';
 import { HomeCaseServis } from './home.case.service';
 
@@ -26,11 +26,21 @@ export class HomeComponent implements OnInit {
     { name: 'Emilio', price: 29, image: 'eeeee' },
   ];
 
+  public isLoading$():Observable<boolean>{
+   
+    return this.store.select(AuthSelector.isLoading)
+  }
+
   loading$: Observable<boolean> = new Observable();
   itemPrueba$: Observable<ItemsState> = new Observable();
 
   ngOnInit(): void {
-    this.loading$ = this.store.select(selectListLoading);
+    debugger
+    this.loading$.subscribe(res => {console.log(res)})
+    this.loading$ = this.store.select(AuthSelector.isLoading);
+    
     this.store.dispatch(loadItems());
+
+    console.log('Esto es loading observable', this.isLoading$())
   }
 }
